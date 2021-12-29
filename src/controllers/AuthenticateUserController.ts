@@ -5,9 +5,12 @@ class AuthenticateUserController {
     const { code } = request.body;
 
     const service = new AutheticateUserService();
-    const result = await service.execute(code);
-  
-    return response.json(result);
+    try {
+      const result = await service.execute(code);
+      return response.json(result);
+    } catch (err) {
+      return response.json({error: err.message});
+    }
   }
 }
 
